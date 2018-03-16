@@ -10,6 +10,7 @@ using Assignment2.Models;
 
 namespace Assignment2.Controllers
 {
+    [Authorize]
     public class bookInfoController : Controller
     {
         private BookStoreModel db = new BookStoreModel();

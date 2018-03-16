@@ -10,11 +10,13 @@ using Assignment2.Models;
 
 namespace Assignment2.Controllers
 {
+    [Authorize]
     public class bookLocationsController : Controller
     {
         private BookStoreModel db = new BookStoreModel();
 
         // GET: bookLocations
+        [OverrideAuthorization]
         public ActionResult Index()
         {
             var bookLocations = db.bookLocations.Include(b => b.bookInfo);

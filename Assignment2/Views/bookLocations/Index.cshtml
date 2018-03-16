@@ -8,7 +8,10 @@
 <h2>Book Locations</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
 </p>
 <table class="table sortable">
     <tr>
@@ -41,11 +44,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.bookPhysical)
         </td>
+        @if (Request.IsAuthenticated)
+        {
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.bookStoreNumber }) |
-            @Html.ActionLink("Details", "Details", new { id=item.bookStoreNumber }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.bookStoreNumber })
+            @Html.ActionLink("Edit", "Edit", new { id = item.bookStoreNumber }) |
+            @Html.ActionLink("Details", "Details", new { id = item.bookStoreNumber }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.bookStoreNumber })
         </td>
+        }
     </tr>
 }
 
