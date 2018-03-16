@@ -1,0 +1,51 @@
+﻿@model Assignment2.Models.bookLocation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Book Locations</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bookInfo.bookName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookInfo.bookName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookStoreLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookStoreLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookShelve)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookShelve)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookPhysical)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookPhysical)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.bookStoreNumber }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

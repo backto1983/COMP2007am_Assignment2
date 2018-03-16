@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Assignment2.Models.bookInfo>
+
+@{
+    ViewBag.Title = "Books"; <!--Navigation bar title-->
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.BookCount Books</h2> <!--Added a call to the ViewBag property, to show the number of books found by the
+                                      search function-->
+
+<div class="col-md-3">
+    @Html.ActionLink("Create New", "Create")
+</div>
+<div class="col-md-9 text-right">
+    <!--This div contains the search form, which is protected against malicious statement injections thanks 
+        to the AntyForgeryToken-->
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken();
+        <input name="Title" id="Title" placeholder="Search by Book Title" />
+        <!--The search function looks for books based on its titles (bookName), which was defined in the 
+            bookInfo model -->
+        <button class="btn btn-default">Search</button>
+    }
+</div>
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.bookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookAuthor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookGenre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookEdition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookReleaseYear)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookAuthor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookGenre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookEdition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookReleaseYear)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.bookID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.bookID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.bookID })
+            </td>
+            </tr>
+        }
+    </table>

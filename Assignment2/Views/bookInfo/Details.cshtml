@@ -1,0 +1,59 @@
+﻿<!--Use a import statement to use information contained in a model-->
+@model Assignment2.Models.bookInfo
+
+@{
+    ViewBag.Title = "Book Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Book Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bookName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookAuthor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookAuthor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookGenre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookGenre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookEdition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookEdition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookReleaseYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookReleaseYear)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.bookID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Assignment2.Models.bookLocation>
+
+@{
+    ViewBag.Title = "Book Locations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Book Locations</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.bookInfo.bookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookStoreLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookShelve)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookPhysical)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.bookInfo.bookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bookStoreLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bookShelve)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bookPhysical)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.bookStoreNumber }) |
+            @Html.ActionLink("Details", "Details", new { id=item.bookStoreNumber }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.bookStoreNumber })
+        </td>
+    </tr>
+}
+
+</table>
