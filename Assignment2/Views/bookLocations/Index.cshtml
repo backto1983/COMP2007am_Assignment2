@@ -8,7 +8,7 @@
 <h2>Book Locations</h2>
 
 <p>
-    @if (Request.IsAuthenticated)
+    @if (Request.IsAuthenticated) //"Create New" link only visible when the user is logged
     {
         @Html.ActionLink("Create New", "Create")
     }
@@ -44,7 +44,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.bookPhysical)
         </td>
-        @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated) //Links only visible when the user is logged
         {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.bookStoreNumber }) |

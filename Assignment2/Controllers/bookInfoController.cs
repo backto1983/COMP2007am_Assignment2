@@ -10,7 +10,7 @@ using Assignment2.Models;
 
 namespace Assignment2.Controllers
 {
-    [Authorize]
+    [Authorize] //Used to allow access to views related to a particular controller only when logged
     public class bookInfoController : Controller
     {
         private BookStoreModel db = new BookStoreModel();

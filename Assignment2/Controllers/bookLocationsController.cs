@@ -10,13 +10,13 @@ using Assignment2.Models;
 
 namespace Assignment2.Controllers
 {
-    [Authorize]
+    [Authorize] //Used to allow access to views related to a particular controller only when logged
     public class bookLocationsController : Controller
     {
         private BookStoreModel db = new BookStoreModel();
 
         // GET: bookLocations
-        [OverrideAuthorization]
+        [OverrideAuthorization] //Used to access a certain view, even when not logged
         public ActionResult Index()
         {
             var bookLocations = db.bookLocations.Include(b => b.bookInfo);
