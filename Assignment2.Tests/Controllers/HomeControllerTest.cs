@@ -12,11 +12,19 @@ namespace Assignment2.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
+        HomeController controller;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            // Instantiate the HomeController declared at the class level
+            controller = new HomeController();
+        }
+
         [TestMethod]
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
@@ -29,7 +37,6 @@ namespace Assignment2.Tests.Controllers
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController();
 
             // Act
             ViewResult result = controller.About() as ViewResult;
@@ -42,8 +49,6 @@ namespace Assignment2.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            HomeController controller = new HomeController();
-
             // Act
             ViewResult result = controller.Contact() as ViewResult;
 
