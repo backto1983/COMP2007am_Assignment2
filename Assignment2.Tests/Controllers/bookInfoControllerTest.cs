@@ -154,5 +154,53 @@ namespace Assignment2.Tests.Controllers
             Assert.AreEqual("Edit", actual.ViewName);
         }
 
+        // GET: Create
+        [TestMethod]
+        public void CreateViewLoads()
+        {
+            // Act
+            var actual = (ViewResult)controller.Create();
+
+            // Assert
+            Assert.AreEqual("Create", actual.ViewName);
+        }
+
+        // POST: Create
+        [TestMethod]
+        public void CreatePostValID()
+        {
+            // Arrange
+            bookInfo b = new bookInfo
+            {
+                bookName = "A Game of Thrones",
+                bookGenre = "Fantasy"
+            };
+
+            // Act
+            var actual = (RedirectToRouteResult)controller.Create(b);
+
+            // Assert
+            Assert.AreEqual("Index", actual.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void CreatePostInvalid()
+        {
+            // arrange
+            bookInfo b = new bookInfo
+            {
+                bookName = "A Game of Thrones",
+                bookGenre = "Fantasy"
+            };
+
+            controller.ModelState.AddModelError("key", "cannot add order");
+
+            // Act
+            var actual = (ViewResult)controller.Create(b);
+
+            // Assert
+            Assert.AreEqual("Create", actual.ViewName);
+        }
+
     }
 }
