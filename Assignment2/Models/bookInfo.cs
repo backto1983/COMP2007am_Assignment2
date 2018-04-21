@@ -38,5 +38,10 @@ namespace Assignment2.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bookLocation> bookLocations { get; set; }
+
+        public static object Any(Func<object, bool> p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Assignment2.Models
     {
         private BookStoreModel db = new BookStoreModel();
 
-        public IQueryable<bookInfo> bookInfo { get { return db.bookInfo; } }
+        public IQueryable<bookInfo> books { get { return db.bookInfo; } }
 
         public void Delete(bookInfo bookInfo)
         {

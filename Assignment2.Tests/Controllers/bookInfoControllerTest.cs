@@ -17,7 +17,7 @@ namespace Assignment2.Tests.Controllers
     public class bookInfoControllerTest
     {
         bookInfoController controller;
-        List<bookInfo> booksInfo;
+        List<bookInfo> books;
         Mock<IBookInfoRepository> mock;
 
         [TestInitialize]
@@ -27,14 +27,15 @@ namespace Assignment2.Tests.Controllers
             mock = new Mock<IBookInfoRepository>();
 
             // Mock bookInfo data
-            booksInfo = new List<bookInfo>
+            books = new List<bookInfo>
             {
-                new bookInfo { bookID = 1, bookName = "Ubik", bookGenre = "Sci-Fi" },
-                new bookInfo { bookID = 2, bookName = "A Game of Thrones", bookGenre = "Fantasy" }
+                new bookInfo { bookID = 1, bookName = "Neuromancer", bookGenre = "Sci-Fi" },
+                new bookInfo { bookID = 2, bookName = "2001: a Space Odyssey", bookGenre = "Sci-Fi" },
+                new bookInfo { bookID = 3, bookName = "A Game of Thrones", bookGenre = "Fantasy" },
             };
 
             // Populate the mock repository with mock data
-            mock.Setup(b => b.bookInfo).Returns(booksInfo.AsQueryable());
+            mock.Setup(b => b.books).Returns(books.AsQueryable());
 
             // Inject the mock dependency when calling the controller's constructor
             controller = new bookInfoController(mock.Object);
@@ -51,38 +52,83 @@ namespace Assignment2.Tests.Controllers
         }
 
         [TestMethod]
-        public void IndexLoadsBooksInfo()
+        public void IndexLoadsBooks()
         {
             // Act - cast ActionResult return type to ViewResult to access the model
             var actual = (List<bookInfo>)((ViewResult)controller.Index()).Model;
 
+            //List<bookInfo> actual = books.ToList();
+
             // Assert
-            CollectionAssert.AreEqual(booksInfo, actual);
+            CollectionAssert.AreEqual(books, actual);
         }
 
-        public bookInfoControllerTest()
+        [TestMethod]
+        public void IndexSearch(String Title) // Another method with an inexistent book
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            Title = "Ubik";
+
+            // Act - cast ActionResult return type to ViewResult to access the model
+            var actual = (List<bookInfo>)((ViewResult)controller.Index()).Model;
+
+            // Assert
+            CollectionAssert.Contains(actual, Title);
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        //GET: Details
+        [TestMethod]
+        public void DetailsInvalidId()
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            // Act
+            var actual = (ViewResult)controller.Details(4);
+
+            // Assert
+            Assert.AreEqual("Error", actual.ViewName);
         }
+
+        [TestMethod]
+        public void DetailsNoId()
+        {
+            // Act
+            var actual = (ViewResult)controller.Details(null);
+
+            // Assert
+            Assert.AreEqual("Error", actual.ViewName);
+        }
+
+        // GET: Edit
+        [TestMethod]
+        public void EditGetValidID()
+        {
+            // Act
+            var actual = ((ViewResult)controller.Edit(1)).Model;
+
+            // Assert
+            Assert.AreEqual(books[0], actual);
+        }
+
+        [TestMethod]
+        public void EditGetInvalidID()
+        {
+            // Act
+            var actual = (ViewResult)controller.Edit(4);
+
+            // Assert
+            Assert.AreEqual("Error", actual.ViewName);
+        }
+
+        [TestMethod]
+        public void EditGetNoID()
+        {
+            // Assert - must pass an int so the overload calls GET not POST
+            int? id = null;
+
+            // Act
+            var actual = (ViewResult)controller.Edit(id);
+
+            // Assert
+            Assert.AreEqual("Error", actual.ViewName);
+        }
+
     }
 }

@@ -33,11 +33,11 @@ namespace Assignment2.Controllers
         [OverrideAuthorization]
         public ActionResult Index()
         {
-            var books = db.bookInfo.Include(a => a.bookName);
+            var books = db.books.Include(b => b.bookName);
             ViewBag.BookCount = books.Count(); // .Count() property stores the number of books found by the search
                                                // and saves it in the ViewBag
 
-            return View(db.bookInfo.OrderBy(a => a.bookName).ToList()); // Books ordered by name
+            return View(db.books.OrderBy(b => b.bookName).ToList()); // Books ordered by name
         }
 
         // POST: bookInfoController/Index
@@ -45,11 +45,11 @@ namespace Assignment2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(String Title)
         {
-            var books = from a in db.bookInfo select a;
+            var books = from b in db.books select b;
 
             if (Title != "") //If the search box is not empty...
             {
-                books = books.Where(a => a.bookName.Contains(Title)); //return books that matches the search query
+                books = books.Where(b => b.bookName.Contains(Title)); //return books that matches the search query
             }
 
             ViewBag.BookCount = books.Count();
@@ -67,14 +67,14 @@ namespace Assignment2.Controllers
 
             //bookInfo bookInfo = db.bookInfo.Find(id);
             // Select single bookInfo using LINQ
-            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+            bookInfo bookInfo = db.books.SingleOrDefault(b => b.bookID == id);
 
             if (bookInfo == null)
             {
                 //return HttpNotFound();
                 return View("Error");
             }
-            return View(bookInfo);
+            return View("Details", bookInfo);
         }
 
         // The methods below implement CRUD functions
@@ -113,7 +113,7 @@ namespace Assignment2.Controllers
             }
 
             //bookInfo bookInfo = db.bookInfo.Find(id);
-            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+            bookInfo bookInfo = db.books.SingleOrDefault(b => b.bookID == id);
 
             if (bookInfo == null)
             {
@@ -151,7 +151,7 @@ namespace Assignment2.Controllers
             }
 
             //bookInfo bookInfo = db.bookInfo.Find(id);
-            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+            bookInfo bookInfo = db.books.SingleOrDefault(b => b.bookID == id);
 
             if (bookInfo == null)
             {
@@ -169,7 +169,7 @@ namespace Assignment2.Controllers
             //bookInfo bookInfo = db.bookInfo.Find(id);
             //db.bookInfo.Remove(bookInfo);
             //db.SaveChanges();
-            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+            bookInfo bookInfo = db.books.SingleOrDefault(b => b.bookID == id);
             db.Delete(bookInfo);
             return RedirectToAction("Index");
         }
