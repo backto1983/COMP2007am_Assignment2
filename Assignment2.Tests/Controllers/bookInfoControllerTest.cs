@@ -66,7 +66,7 @@ namespace Assignment2.Tests.Controllers
         [TestMethod]
         public void IndexSearch(String Title) // Another method with an inexistent book
         {
-            Title = "Ubik";
+            Title = "Neuromancer";
 
             // Act - cast ActionResult return type to ViewResult to access the model
             var actual = (List<bookInfo>)((ViewResult)controller.Index()).Model;
@@ -128,6 +128,30 @@ namespace Assignment2.Tests.Controllers
 
             // Assert
             Assert.AreEqual("Error", actual.ViewName);
+        }
+
+        // POST: Edit
+        [TestMethod]
+        public void EditPostValID()
+        {
+            // Act - pass in the first mock books object
+            var actual = (RedirectToRouteResult)controller.Edit(books[0]);
+
+            // Assert
+            Assert.AreEqual("Index", actual.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void EditPostInvalID()
+        {
+            // Arrange - manually set the model state to invalid
+            controller.ModelState.AddModelError("key", "unit test error");
+
+            // Act - pass in the first mock books object
+            var actual = (ViewResult)controller.Edit(books[0]);
+
+            // Assert
+            Assert.AreEqual("Edit", actual.ViewName);
         }
 
     }
