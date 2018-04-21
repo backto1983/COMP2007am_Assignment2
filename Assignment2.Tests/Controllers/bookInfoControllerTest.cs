@@ -184,7 +184,7 @@ namespace Assignment2.Tests.Controllers
         }
 
         [TestMethod]
-        public void CreatePostInvalid()
+        public void CreatePostInvalID()
         {
             // arrange
             bookInfo b = new bookInfo
@@ -202,5 +202,46 @@ namespace Assignment2.Tests.Controllers
             Assert.AreEqual("Create", actual.ViewName);
         }
 
+        // GET: Delete
+        [TestMethod]
+        public void DeleteValidID()
+        {
+            // Act
+            var actual = ((ViewResult)controller.Delete(1)).Model;
+
+            // Assert
+            Assert.AreEqual(books[0], actual);
+        }
+
+        [TestMethod]
+        public void DeleteInvalidID()
+        {
+            // Act
+            var actual = (ViewResult)controller.Delete(4);
+
+            // Assert
+            Assert.AreEqual("Error", actual.ViewName);
+        }
+
+        [TestMethod]
+        public void DeleteNoID()
+        {
+            // Act
+            var actual = (ViewResult)controller.Delete(null);
+
+            // Assert
+            Assert.AreEqual("Error", actual.ViewName);
+        }
+
+        // POST: Delete
+        [TestMethod]
+        public void DeletePostValid()
+        {
+            // Act
+            var actual = (RedirectToRouteResult)controller.DeleteConfirmed(34);
+
+            // Assert
+            Assert.AreEqual("Index", actual.RouteValues["action"]);
+        }
     }
 }
