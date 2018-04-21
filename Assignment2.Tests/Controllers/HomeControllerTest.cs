@@ -24,8 +24,6 @@ namespace Assignment2.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            // Arrange
-
             // Act
             ViewResult result = controller.Index() as ViewResult;
 
@@ -36,8 +34,6 @@ namespace Assignment2.Tests.Controllers
         [TestMethod]
         public void About()
         {
-            // Arrange
-
             // Act
             ViewResult result = controller.About() as ViewResult;
 
@@ -48,7 +44,6 @@ namespace Assignment2.Tests.Controllers
         [TestMethod]
         public void Contact()
         {
-            // Arrange
             // Act
             ViewResult result = controller.Contact() as ViewResult;
 

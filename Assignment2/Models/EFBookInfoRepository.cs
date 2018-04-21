@@ -33,7 +33,6 @@ namespace Assignment2.Models
                 db.Entry(bookInfo).State = EntityState.Modified;
             }
             db.SaveChanges();
-
             return bookInfo;
         }
     }

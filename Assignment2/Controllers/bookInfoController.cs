@@ -13,9 +13,24 @@ namespace Assignment2.Controllers
     [Authorize] //Used to allow access to views related to a particular controller only when logged
     public class bookInfoController : Controller
     {
-        private BookStoreModel db = new BookStoreModel();
+        // db connection commented so unit test can be used
+        // private BookStoreModel db = new BookStoreModel();
+        private IBookInfoRepository db;
+
+        // Default constructor - use the database/Entity Framework
+        public bookInfoController()
+        {
+            this.db = new EFBookInfoRepository();
+        }
+
+        // Unit test constructor - mock data comes in, sono database/Entity Framework is used
+        public bookInfoController(IBookInfoRepository mockRepo)
+        {
+            this.db = mockRepo;
+        }
 
         // GET: bookInfo
+        [OverrideAuthorization]
         public ActionResult Index()
         {
             var books = db.bookInfo.Include(a => a.bookName);
@@ -46,12 +61,18 @@ namespace Assignment2.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error");
             }
-            bookInfo bookInfo = db.bookInfo.Find(id);
+
+            //bookInfo bookInfo = db.bookInfo.Find(id);
+            // Select single bookInfo using LINQ
+            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+
             if (bookInfo == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return View("Error");
             }
             return View(bookInfo);
         }
@@ -61,7 +82,7 @@ namespace Assignment2.Controllers
         // GET: bookInfo/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
         
         // POST: bookInfo/Create
@@ -73,12 +94,13 @@ namespace Assignment2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.bookInfo.Add(bookInfo);
-                db.SaveChanges();
+                //db.bookInfo.Add(bookInfo);
+                //db.SaveChanges();
+                db.Save(bookInfo); // use tes repository instead of Entity Framework directly
                 return RedirectToAction("Index");
             }
 
-            return View(bookInfo);
+            return View("Create", bookInfo);
         }
 
         // GET: bookInfo/Edit/5
@@ -86,12 +108,17 @@ namespace Assignment2.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error");
             }
-            bookInfo bookInfo = db.bookInfo.Find(id);
+
+            //bookInfo bookInfo = db.bookInfo.Find(id);
+            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+
             if (bookInfo == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return View("Error");
             }
             return View(bookInfo);
         }
@@ -105,11 +132,13 @@ namespace Assignment2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(bookInfo).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(bookInfo).State = EntityState.Modified;
+                //db.SaveChanges();
+                db.Save(bookInfo);
+
                 return RedirectToAction("Index");
             }
-            return View(bookInfo);
+            return View("Edit", bookInfo);
         }
 
         // GET: bookInfo/Delete/5
@@ -117,14 +146,19 @@ namespace Assignment2.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("Error");
             }
-            bookInfo bookInfo = db.bookInfo.Find(id);
+
+            //bookInfo bookInfo = db.bookInfo.Find(id);
+            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+
             if (bookInfo == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return View("Error");
             }
-            return View(bookInfo);
+            return View("Delete", bookInfo);
         }
 
         // POST: bookInfo/Delete/5
@@ -132,19 +166,21 @@ namespace Assignment2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            bookInfo bookInfo = db.bookInfo.Find(id);
-            db.bookInfo.Remove(bookInfo);
-            db.SaveChanges();
+            //bookInfo bookInfo = db.bookInfo.Find(id);
+            //db.bookInfo.Remove(bookInfo);
+            //db.SaveChanges();
+            bookInfo bookInfo = db.bookInfo.SingleOrDefault(b => b.bookID == id);
+            db.Delete(bookInfo);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
