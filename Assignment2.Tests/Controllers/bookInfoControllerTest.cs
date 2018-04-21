@@ -29,9 +29,9 @@ namespace Assignment2.Tests.Controllers
             // Mock bookInfo data
             books = new List<bookInfo>
             {
-                new bookInfo { bookID = 1, bookName = "Neuromancer", bookGenre = "Sci-Fi" },
-                new bookInfo { bookID = 2, bookName = "2001: a Space Odyssey", bookGenre = "Sci-Fi" },
-                new bookInfo { bookID = 3, bookName = "A Game of Thrones", bookGenre = "Fantasy" },
+                new bookInfo { bookID = 1, bookName = "2001: a Space Odyssey", bookGenre = "Sci-Fi" },
+                new bookInfo { bookID = 2, bookName = "A Game of Thrones", bookGenre = "Fantasy" },
+                new bookInfo { bookID = 3, bookName = "A Long Way Down", bookGenre = "Fiction" },
             };
 
             // Populate the mock repository with mock data

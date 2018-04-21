@@ -13,7 +13,7 @@ namespace Assignment2.Controllers
     [Authorize] //Used to allow access to views related to a particular controller only when logged
     public class bookInfoController : Controller
     {
-        // db connection commented so unit test can be used
+        // Database connection commented so unit test can be used
         // private BookStoreModel db = new BookStoreModel();
         private IBookInfoRepository db;
 
