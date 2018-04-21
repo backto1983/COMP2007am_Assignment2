@@ -75,6 +75,16 @@ namespace Assignment2.Tests.Controllers
             CollectionAssert.Contains(actual, Title);
         }
 
+        [TestMethod]
+        public void DetailsValidID()
+        {
+            // Act
+            var actual = ((ViewResult)controller.Details(1)).Model;
+
+            // Assert 
+            Assert.AreEqual(books[0], actual);
+        }
+
         //GET: Details
         [TestMethod]
         public void DetailsInvalidId()
