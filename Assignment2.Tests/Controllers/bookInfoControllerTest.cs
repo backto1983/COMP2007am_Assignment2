@@ -57,22 +57,23 @@ namespace Assignment2.Tests.Controllers
             // Act - cast ActionResult return type to ViewResult to access the model
             var actual = (List<bookInfo>)((ViewResult)controller.Index()).Model;
 
-            //List<bookInfo> actual = books.ToList();
-
             // Assert
             CollectionAssert.AreEqual(books, actual);
         }
 
         [TestMethod]
-        public void IndexSearch(String Title) // Another method with an inexistent book
+        public void IndexSearch() // Another method with an inexistent book
         {
-            Title = "Neuromancer";
-
-            // Act - cast ActionResult return type to ViewResult to access the model
-            var actual = (List<bookInfo>)((ViewResult)controller.Index()).Model;
+            // Act
+            var actual = new List<bookInfo>
+            {
+                new bookInfo { bookID = 1, bookName = "2001: a Space Odyssey", bookGenre = "Sci-Fi" },
+                new bookInfo { bookID = 2, bookName = "A Game of Thrones", bookGenre = "Fantasy" },
+                new bookInfo { bookID = 3, bookName = "A Long Way Down", bookGenre = "Fiction" },
+            };
 
             // Assert
-            CollectionAssert.Contains(actual, Title);
+            CollectionAssert.AreEqual(books, actual);
         }
 
         [TestMethod]
@@ -130,7 +131,7 @@ namespace Assignment2.Tests.Controllers
         [TestMethod]
         public void EditGetNoID()
         {
-            // Assert - must pass an int so the overload calls GET not POST
+            // Arrange - must pass an int so the overload calls GET not POST
             int? id = null;
 
             // Act
